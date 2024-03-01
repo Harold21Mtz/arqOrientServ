@@ -1,6 +1,7 @@
 import bodyParser from "body-parser"
 import express from "express";
 import { env } from "./default.js";
+import router from "../routes/index.routes.js";
 
 export default class Server{
     constructor(){
@@ -20,7 +21,7 @@ export default class Server{
     }
 
     routes(){
-
+        this.app.use(router);
     }
 
     runServer(){
