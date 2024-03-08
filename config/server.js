@@ -2,15 +2,16 @@ import bodyParser from "body-parser"
 import express from "express";
 import { env } from "./default.js";
 import router from "../routes/index.routes.js";
+import pgService from "../services/pg.service.js";
 
 export default class Server{
     constructor(){
-
+        this.app = express();
+        this.port = env.port;
     }
     
     conectionDB(){
-        this.app = express();
-        this.port = env.port;
+        new pgService();
     }
 
     middlewares(){
