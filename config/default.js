@@ -3,5 +3,6 @@ dotenv.config();
 
 export const env = {
     port : process.env.PORT || 3000,
-    postgres: process.env.DB_URL_PG
+    postgres: process.env.DB_URL_PG,
+    secretkey: process.env.SECRET_KEY
 }
