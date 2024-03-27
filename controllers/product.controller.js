@@ -1,23 +1,36 @@
-import { getProductModel, getProductUnicoModel, postProductUnico } from "../models/product.model.js";
+import {getAllProducts, getProductById, postProduct, putProduct, deleteProduct} from "../models/product.model.js";
 
-export const getProduct = async(req, res)=>{
-    let msg = await getProductModel();
-    res.status(200).json({success: true, msg: msg});
+export const getAll = async (req, res) => {
+    console.log('Get all products');
+    let data = await getAllProducts();
+    res.status(200).json(data);
 }
 
-export const postProduct = async (req, res)=>{
-    let {name, detail, value, img} = req.body;
-    let data = await postProductUnico(name, detail, value, img);
-    res.status(200).json({success: true, data : data});
+export const getProductId = async (req, res) => {
+    console.log('Get product by id');
+    let {id} = req.params;
+    let data = await getProductById(id);
+    res.status(data.status).json(data.data);
 }
 
-export const getProductUnico = async(req, res)=>{
-    try {
-        let {id} = req.params;
-        let data = await getProductUnicoModel(id);
-        res.status(200).json({success: true, data: data});
-    } catch (error) {
-        res.status(200).json({success: true, data: "no hay datos: " + error});
-    }
-   
+export const createProduct = async (req, res) => {
+    console.log('Create a new product');
+    let dataProductCreate = req.body;
+    let data = await postProduct(dataProductCreate);
+    res.status(data.status).json(data.data);
+}
+
+export const updateProduct = async (req, res) => {
+    console.log('Update a product by id');
+    let {id} = req.params;
+    let dataProductUpdate = req.body;
+    let data = await putProduct(id, dataProductUpdate);
+    res.status(data.status).json(data.data);
+}
+
+export const deleProduct = async (req, res) => {
+    console.log('Delete a product by id');
+    let {id} = req.params;
+    let data = await deleteProduct(id);
+    res.status(data.status).json(data);
 }

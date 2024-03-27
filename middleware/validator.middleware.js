@@ -1,17 +1,21 @@
-import { validationResult } from "express-validator"
+import { validationResult } from "express-validator";
 
-export const validate = (validations) => async (req, res, next) => {
-    await Promise.all(validations.map( (val)=> val.run() ))
+export const validate = ( validation) => async (req, res, next) =>{
+    await Promise.all(
+        validation.map((val) => {
+            return val.run(req)
+        })
+    )
 
 
     const error = validationResult(req);
-    if (error.isEmpty) {
+    console.log(error);
+    if( error.isEmpty()){
         return next();
     }
 
-      res.status(422).json({
-        errors: error.array(),
-        success: false
-    });
-
+    res.status(422).json({
+        success: false,
+        errors: error
+    })
 }

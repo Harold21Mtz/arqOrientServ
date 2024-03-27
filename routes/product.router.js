@@ -1,12 +1,14 @@
-import { Router} from "express";
-import { getProduct, getProductUnico, postProduct } from "../controllers/product.controller.js";
-import { validate } from "../middleware/validator.middleware.js";
-import { postProductValidator } from "../validations/product.validator.js";
+import {Router} from "express";
+import {getAll, getProductId, createProduct, updateProduct, deleProduct} from "../controllers/product.controller.js";
+import {validate} from "../middleware/validator.middleware.js";
+import {postProductValidator} from "../validations/product.validator.js";
 
 const routeProduct = Router();
 
-routeProduct.get("/get", getProduct);
-routeProduct.post("/post", postProduct);
-routeProduct.get("/:id", validate(postProductValidator), getProductUnico);
+routeProduct.get("/all", getAll);
+routeProduct.get("/:id", getProductId);
+routeProduct.post("/", validate(postProductValidator), createProduct);
+routeProduct.put("/:id", validate(postProductValidator), updateProduct);
+routeProduct.delete("/:id", deleProduct);
 
 export default routeProduct;

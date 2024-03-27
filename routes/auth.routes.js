@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { login } from "../controllers/auth.controller.js";
+import {Router} from "express";
+import {login} from "../controllers/auth.controller.js";
 
 const routeAuth = Router();
 
-routeAuth.get('/', login)
+routeAuth.get('/', login);
 
 export default routeAuth;

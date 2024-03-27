@@ -1,4 +1,4 @@
-import { Router} from "express";
+import {Router} from "express";
 import routeProduct from "./product.router.js";
 import routeAuth from "./auth.routes.js";
 
