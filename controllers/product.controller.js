@@ -32,5 +32,5 @@ export const deleProduct = async (req, res) => {
     console.log('Delete a product by id');
     let {id} = req.params;
     let data = await deleteProduct(id);
-    res.status(data.status).json(data);
+    res.status(data.status).json(data.data);
 }
