@@ -1,4 +1,4 @@
-import {getUser} from "../models/auth.model.js";
+import {getUser, postUser} from "../models/auth.model.js";
 import {generateToken} from "../services/token.service.js";
 
 export const login = async (req, res) => {
@@ -24,4 +24,11 @@ export const login = async (req, res) => {
         });
     }
 
+}
+
+export const createUser = async (req, res) => {
+    console.log('Create a new user');
+    let dataUserCreate = req.body;
+    let data = await postUser(dataUserCreate);
+    res.status(data.status).json(data.data);
 }

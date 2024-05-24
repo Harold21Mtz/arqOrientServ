@@ -20,7 +20,7 @@ export const verifyToken = (req, res, next) => {
         })
     }
 
-    jwt.verify(token[1], env.secretkey, (err, decoded) => {
+    jwt.verify(token[1], env.secretKey, (err, decoded) => {
         if (err) {
             return res.status(401).json({
                 success: false,
