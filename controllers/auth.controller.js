@@ -1,4 +1,4 @@
-import {getUser, postUser} from "../models/auth.model.js";
+import {getUser, getUserEmailExists, postUser} from "../models/auth.model.js";
 import {generateToken} from "../services/token.service.js";
 
 export const login = async (req, res) => {
@@ -30,5 +30,12 @@ export const createUser = async (req, res) => {
     console.log('Create a new user');
     let dataUserCreate = req.body;
     let data = await postUser(dataUserCreate);
+    res.status(data.status).json(data.data);
+}
+
+export const getEmailExists = async (req, res) => {
+    console.log('Get exists email user');
+    let emailUser = req.body;
+    let data = await getUserEmailExists(emailUser);
     res.status(data.status).json(data.data);
 }

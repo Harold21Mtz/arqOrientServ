@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {createUser, login} from "../controllers/auth.controller.js";
+import {createUser, getEmailExists, login} from "../controllers/auth.controller.js";
 import {validate} from "../middleware/validator.middleware.js";
 import {postUserValidator} from "../validations/user.validator.js";
 
@@ -49,5 +49,28 @@ routeAuth.post('/login', login);
  *         description: El usuario ya existe
  */
 routeAuth.post('/create', validate(postUserValidator), createUser);
+
+/**
+ * @swagger
+ * /auth/existsEmail:
+ *   post:
+ *     summary: Exists email
+ *     description: Verifica la existencia del correo
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: No exists
+ *       409:
+ *         description: Exists
+ */
+routeAuth.post('/existsEmail', getEmailExists);
 
 export default routeAuth;

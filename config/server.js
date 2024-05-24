@@ -1,10 +1,19 @@
 import express from 'express';
 import { env } from './default.js';
 import router from '../routes/index.routes.js';
-import pgService from '../services/pg.service.js';
+import PgService from '../services/pgService.js';
 import middle from '../middleware/index.middleware.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig.js';
+import cors from "cors"
+
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH'],
+    allowedHeaders: '**',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
 
 export default class Server {
     constructor() {
@@ -12,11 +21,12 @@ export default class Server {
         this.port = env.port;
     }
 
-    conectionDB() {
-        new pgService();
+    connectionDB() {
+        new PgService();
     }
 
     middlewares() {
+        this.app.use(cors(corsOptions))
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(middle);
@@ -37,7 +47,7 @@ export default class Server {
     }
 
     load() {
-        this.conectionDB();
+        this.connectionDB();
         this.middlewares();
         this.routes();
         this.runServer();

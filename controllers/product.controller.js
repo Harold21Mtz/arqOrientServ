@@ -1,8 +1,21 @@
-import {getAllProducts, getProductById, postProduct, putProduct, deleteProduct} from "../models/product.model.js";
+import {
+    getAllProducts,
+    getProductById,
+    postProduct,
+    putProduct,
+    deleteProduct,
+    getAllCategories
+} from "../models/product.model.js";
 
 export const getAll = async (req, res) => {
     console.log('Get all products');
     let data = await getAllProducts();
+    res.status(200).json(data);
+}
+
+export const getAllCat = async (req, res) => {
+    console.log("Get all categories")
+    let data = await getAllCategories();
     res.status(200).json(data);
 }
 

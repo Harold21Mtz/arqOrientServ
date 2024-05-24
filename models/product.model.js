@@ -1,10 +1,21 @@
-import pgService from "../services/pg.service.js";
+import PgService from "../services/pgService.js";
 
 export const getAllProducts = async() =>{
     try {
-        const pg = new pgService();
+        const pg = new PgService();
         return await pg.connection.query(
-            "SELECT p.id_product, p.name as nameProduct, p.detail, p.value, p.img, c.id_category, c.name as nameCategory FROM PRODUCT p INNER JOIN CATEGORY c on p.category_id = c.id_category"
+            "SELECT p.id_product, p.name as name_product, p.description, p.price, p.stock, p.img, c.id_category, c.name as name_category FROM PRODUCT p INNER JOIN CATEGORY c on p.category_id = c.id_category"
+        )
+    } catch (error) {
+        return 'Internal Server Error, ' + error;
+    }
+}
+
+export const getAllCategories = async() =>{
+    try {
+        const pg = new PgService();
+        return await pg.connection.query(
+            "SELECT * FROM CATEGORY"
         )
     } catch (error) {
         return 'Internal Server Error, ' + error;
@@ -13,8 +24,8 @@ export const getAllProducts = async() =>{
 
 export async function getProductById(id){
     try {
-        const pg = new pgService();
-        const product = await pg.connection.oneOrNone("SELECT p.id_product, p.name as nameProduct, p.detail, p.value, p.img, c.id_category, c.name as nameCategory FROM PRODUCT p INNER JOIN CATEGORY c on p.category_id = c.id_category WHERE id_product = $1", [id]);
+        const pg = new PgService();
+        const product = await pg.connection.oneOrNone("SELECT p.id_product, p.name as nameProduct, p.description, p.price, p.stock, p.img, c.id_category, c.name as nameCategory FROM PRODUCT p INNER JOIN CATEGORY c on p.category_id = c.id_category WHERE id_product = $1", [id]);
         if(!product) {
             return { data: "Product Not Found", status: 404}
         }
@@ -27,7 +38,7 @@ export async function getProductById(id){
 
 export async function postProduct(dataProductCreate){
     try{
-        const pg = new pgService();
+        const pg = new PgService();
 
         const productExists = await pg.connection.query("SELECT * FROM PRODUCT WHERE name = $1", [dataProductCreate.name]);
 
@@ -35,7 +46,7 @@ export async function postProduct(dataProductCreate){
             return { data: "The product could not be added because it already exists", status: 409}
         }
 
-        const saveProduct = await pg.connection.query("INSERT INTO PRODUCT(name, detail, value, img, category_id) VALUES ($1, $2, $3, $4, $5) RETURNING *", [dataProductCreate.name, dataProductCreate.detail, dataProductCreate.value, dataProductCreate.img, dataProductCreate.category_id]);
+        const saveProduct = await pg.connection.query("INSERT INTO PRODUCT(name, description, price, stock, img, category_id) priceS ($1, $2, $3, $4, $5, $6) RETURNING *", [dataProductCreate.name, dataProductCreate.description, dataProductCreate.price, dataProductCreate.stock, dataProductCreate.img, dataProductCreate.category_id]);
         return {data: saveProduct, status: 201}
 
     }catch (error){
@@ -46,7 +57,7 @@ export async function postProduct(dataProductCreate){
 
 export async function putProduct(id, dataProductUpdate){
     try{
-        const pg = new pgService();
+        const pg = new PgService();
 
         const productExists = await pg.connection.query("SELECT * FROM PRODUCT WHERE id_product = $1", [id]);
 
@@ -60,7 +71,7 @@ export async function putProduct(id, dataProductUpdate){
             return { data: "The product cannot be updated because a product already exists registered with the same name.", status: 409}
         }
 
-        const updateProduct = await pg.connection.query("UPDATE PRODUCT SET name = $1, detail = $2, value = $3, img = $4, category_id = $5 WHERE id_product = $6", [dataProductUpdate.name, dataProductUpdate.detail, dataProductUpdate.value, dataProductUpdate.img, dataProductUpdate.category_id, id]);
+        const updateProduct = await pg.connection.query("UPDATE PRODUCT SET name = $1, description = $2, price = $3, stock = $4, img = $5, category_id = $6 WHERE id_product = $7", [dataProductUpdate.name, dataProductUpdate.description, dataProductUpdate.price, dataProductUpdate.stock, dataProductUpdate.img, dataProductUpdate.category_id, id]);
         return {data: updateProduct, status: 204}
 
     }catch (error){
@@ -71,7 +82,7 @@ export async function putProduct(id, dataProductUpdate){
 
 export async function deleteProduct(id){
     try {
-        const pg = new pgService();
+        const pg = new PgService();
         const product = await pg.connection.oneOrNone("SELECT * FROM PRODUCT WHERE ID_PRODUCT = $1", [id]);
         if(!product) {
             return { data: "Product Not Found", status: 404}

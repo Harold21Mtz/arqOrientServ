@@ -1,16 +1,16 @@
 import pgPromise from "pg-promise";
 import { env } from "../config/default.js";
 
-export default class pgService{
+export default class PgService {
     static instance;
 
     constructor(){
         
-        if(pgService.instance){
-            return pgService.instance;
+        if(PgService.instance){
+            return PgService.instance;
         }
 
-        pgService.instance = this;
+        PgService.instance = this;
         
         const pgp = pgPromise({});
         this.connection = pgp(env.postgres)

@@ -1,5 +1,11 @@
 import {Router} from "express";
-import {getAll, getProductId, createProduct, updateProduct, deleProduct} from "../controllers/product.controller.js";
+import {
+    getAll,
+    getProductId,
+    createProduct,
+    updateProduct,
+    deleProduct
+} from "../controllers/product.controller.js";
 import {validate} from "../middleware/validator.middleware.js";
 import {postProductValidator} from "../validations/product.validator.js";
 

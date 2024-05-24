@@ -45,18 +45,32 @@ const swaggerDefinition = {
                     name: {
                         type: 'string',
                     },
-                    detail: {
+                    description: {
                         type: 'string',
                     },
-                    value: {
+                    price: {
+                        type: 'number',
+                    },
+                    stock: {
                         type: 'number',
                     },
                     img: {
                         type: 'string',
                     },
-                    category_id: {
-                        type: 'numeric',
+                   id_category: {
+                        type: 'number',
                     },
+                },
+            },
+            Category:{
+                name: {
+                    type: 'string',
+                },
+                description: {
+                    type: 'string',
+                },
+                img: {
+                    type: 'string',
                 },
             },
             Token: {
