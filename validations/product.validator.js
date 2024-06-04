@@ -16,29 +16,39 @@ export const postProductValidator = checkSchema({
             errorMessage: 'El nombre debe tener entre 1 y 50 caracteres',
         },
     },
-    detail: {
+    description: {
         in: ['body'],
-        errorMessage: 'Detalle no valido',
+        errorMessage: 'Descripción no válida',
         notEmpty: {
-            errorMessage: 'El detalle no puede estar vacío',
+            errorMessage: 'La descripción no puede estar vacía',
         },
         matches: {
             options: [/^[a-zA-ZñÑ\s]+$/],
-            errorMessage: 'El detalle debe contener solo letras',
+            errorMessage: 'La descripción debe contener solo letras',
         },
         isLength: {
-            options: { min: 1, max: 200 },
-            errorMessage: 'El detalle debe tener entre 1 y 200 caracteres',
+            options: { min: 5, max: 200 },
+            errorMessage: 'La descripción debe tener entre 5 y 200 caracteres',
         },
     },
-    value: {
+    price: {
         in: ['body'],
-        errorMessage: 'Valor no válido',
+        errorMessage: 'Precio no válido',
         notEmpty: {
-            errorMessage: 'El valor no puede estar vacío',
+            errorMessage: 'El precio no puede estar vacío',
         },
         isNumeric: {
-            errorMessage: 'El valor debe ser solo números y tener al menos un dígito',
+            errorMessage: 'El precio debe ser solo números y tener al menos un dígito',
+        },
+    },
+    stock: {
+        in: ['body'],
+        errorMessage: 'Stock no válido',
+        notEmpty: {
+            errorMessage: 'El Stock no puede estar vacío',
+        },
+        isNumeric: {
+            errorMessage: 'El Stock debe ser solo números y tener al menos un dígito',
         },
     },
     img: {

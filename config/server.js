@@ -8,12 +8,13 @@ import swaggerSpec from './swaggerConfig.js';
 import cors from "cors"
 
 const corsOptions = {
-    origin: 'http://localhost:4200',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH'],
-    allowedHeaders: '**',
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
 };
+
+// origin: 'http://localhost:4200',
 
 export default class Server {
     constructor() {

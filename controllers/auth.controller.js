@@ -1,4 +1,4 @@
-import {getUser, getUserEmailExists, postUser} from "../models/auth.model.js";
+import {getUser, getUserByToken, getUserEmailExists, postUser} from "../models/auth.model.js";
 import {generateToken} from "../services/token.service.js";
 
 export const login = async (req, res) => {
@@ -39,3 +39,28 @@ export const getEmailExists = async (req, res) => {
     let data = await getUserEmailExists(emailUser);
     res.status(data.status).json(data.data);
 }
+
+export const getUserSession = async (req, res) => {
+    console.log('Get user on session');
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        console.log('No authorization header');
+        return res.status(401).json({ message: 'Authorization required' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+
+    if (!token) {
+        console.log('No token found');
+        return res.status(401).json({ message: 'Authorization required' });
+    }
+
+    try {
+        let data = await getUserByToken(token);
+        res.status(data.status).json(data.data);
+    } catch (error) {
+        console.log('Error:', error);
+        res.status(500).json({ message: 'Error processing request' });
+    }
+};

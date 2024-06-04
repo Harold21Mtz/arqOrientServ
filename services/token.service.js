@@ -7,3 +7,12 @@ export const generateToken = (data) => {
         exp: Math.floor(Date.now() / 1000) + (60 * 60)
     }, env.secretKey);
 }
+
+export const verifyToken = (token) => {
+    try {
+        const decoded = jwt.verify(token, env.secretKey);
+        return decoded.data;
+    } catch (error) {
+        throw new Error("Token inválido");
+    }
+}
