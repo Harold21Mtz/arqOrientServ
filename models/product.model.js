@@ -11,6 +11,32 @@ export const getAllProducts = async() =>{
     }
 }
 
+export const getAllProductsByCategory = async(id) =>{
+    try {
+        const pg = new PgService();
+        return await pg.connection.query(
+            "SELECT p.id_product, p.name as name_product, p.description, p.price, p.stock, p.img, c.id_category, c.name as name_category FROM PRODUCT p INNER JOIN CATEGORY c on p.category_id = c.id_category where c.id_category = $1", [id]);
+
+    } catch (error) {
+        return 'Internal Server Error, ' + error;
+    }
+}
+
+export const getAllCategoriesWithProduct = async() =>{
+    try {
+        const pg = new PgService();
+        return await pg.connection.query(
+            "SELECT c.id_category, c.name, c.description, c.img \n" +
+            "             FROM CATEGORY c \n" +
+            "             INNER JOIN PRODUCT p on p.category_id = c.id_category \n" +
+            "             GROUP BY c.id_category, c.name, c.img, c.description \n" +
+            "             HAVING COUNT(p.id_product) > 0");
+
+    } catch (error) {
+        return 'Internal Server Error, ' + error;
+    }
+}
+
 export const getAllCategories = async() =>{
     try {
         const pg = new PgService();

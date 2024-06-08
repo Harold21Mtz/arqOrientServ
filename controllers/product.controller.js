@@ -4,12 +4,25 @@ import {
     postProduct,
     putProduct,
     deleteProduct,
-    getAllCategories
+    getAllCategories, getAllProductsByCategory, getAllCategoriesWithProduct
 } from "../models/product.model.js";
 
 export const getAll = async (req, res) => {
     console.log('Get all products');
     let data = await getAllProducts();
+    res.status(200).json(data);
+}
+
+export const getCategoriesWithProducts = async (req, res) => {
+    console.log('Get all categories with products');
+    let data = await getAllCategoriesWithProduct();
+    res.status(200).json(data);
+}
+
+export const getAllProductByCategoryId = async (req, res) => {
+    console.log('Get all products by category id');
+    let {id} = req.params;
+    let data = await getAllProductsByCategory(id);
     res.status(200).json(data);
 }
 

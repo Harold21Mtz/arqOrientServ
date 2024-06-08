@@ -4,7 +4,8 @@ import {
     getProductId,
     createProduct,
     updateProduct,
-    deleProduct
+    deleProduct,
+    getAllProductByCategoryId
 } from "../controllers/product.controller.js";
 import {validate} from "../middleware/validator.middleware.js";
 import {postProductValidator} from "../validations/product.validator.js";
@@ -121,5 +122,28 @@ routeProduct.put("/:id", validate(postProductValidator), updateProduct);
  *         description: Producto no encontrado
  */
 routeProduct.delete("/:id", deleProduct);
+
+/**
+ * @swagger
+ * /product/category/{id}:
+ *   get:
+ *     summary: Obtiene los productos por su category id
+ *     description: Retorna una lista de productos de una categoría específica según su id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: id de la categoría
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Productos encontrados exitosamente
+ *       404:
+ *         description: No existen productos para esta categoría
+ */
+routeProduct.get("/category/:id", getAllProductByCategoryId);
 
 export default routeProduct;
