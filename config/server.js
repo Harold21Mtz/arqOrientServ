@@ -8,7 +8,7 @@ import swaggerSpec from './swaggerConfig.js';
 import cors from "cors"
 
 const corsOptions = {
-    origin: '*',
+    origin: 'http://localhost:4210',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204

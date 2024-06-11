@@ -25,7 +25,6 @@ export const getUserEmailExists = async (dataEmail) => {
     const pg = new PgService();
     const emailExists = await pg.connection.query("SELECT * FROM USUARIO WHERE email = $1", [dataEmail.email.toLowerCase()]);
 
-    console.log(emailExists)
     if (emailExists[0]) {
         return {data: true, status: 409}
     }
