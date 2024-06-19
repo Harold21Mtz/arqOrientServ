@@ -46,8 +46,8 @@ Run Local:
 ## Variables de Entorno
 ```
 ###> CONFIG SERVER <####
-PORT=8000
-URL_SERVER=http:\\127.0.0.1:8000\
+PORT=8010
+URL_SERVER=http:\\127.0.0.1:8010\
 ###> CONFIG SERVER <####
 
 ###> DB_CONNECTION ### 
@@ -68,14 +68,20 @@ Para conectar a la base de datos local, descomentar y modificar la línea corres
 - Reemplazar '5432' por su puerto designado para correr postgres, si no dejarlo igual
 - Reemplazar 'arqorientserv' por el nombre de la bd que quiere que tenga, si no dejarlo igual
 
-DB_URL_PG = postgres://postgres@localhost:5432/arqorientserv
+DB_URL_PG = postgres://postgres:Harold123@localhost:5432/arqorientserv
 
 ### Conexión a la Base en la Nube
 Para conectar a la base de datos en la nube, use la URL ya configurada en las variables de entorno:
 
-DB_URL_PG = postgres://arqOriServ@ep-cool-salad-a4dovsne.us-east-1.aws.neon.tech/arqOriServ?sslmode=require
+DB_URL_PG = postgres://arqOriServ:sxHp4t9azLFQ@ep-cool-salad-a4dovsne.us-east-1.aws.neon.tech/arqOriServ?sslmode=require
 
 Tener en cuenta que las peticiones a la base de datos en la nube pueden ser un poco más lentas que a la local, dependiendo de la conexión a internet.
+
+### URL del frontend
+- http://localhost:4210/
+
+### Documentación con Swagger
+- http://localhost:8010/api-docs
 
 ## Estructura del Proyecto
 
@@ -90,7 +96,6 @@ src\
  |--validator\      # Esquemas de validación
  |--index.js        # Express app
 ```
-
 
 ## API Endpoints
 
