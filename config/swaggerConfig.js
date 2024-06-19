@@ -9,7 +9,7 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: 'http://localhost:8000',
+            url: 'http://localhost:8010',
             description: 'Servidor de desarrollo',
         },
     ],
@@ -88,7 +88,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['./routes/*.js'], // Cambia esto según la ubicación de tus archivos de rutas
+    apis: ['./routes/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
